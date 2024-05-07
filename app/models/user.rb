@@ -4,6 +4,7 @@ class User < ApplicationRecord
   after_create :welcome_send
 
   def welcome_send
+    puts "$" *200
     UserMailer.welcome_email(self).deliver_now
   end
   devise :database_authenticatable, :registerable,
