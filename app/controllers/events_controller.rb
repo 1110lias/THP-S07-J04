@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: [:new, :create] #not sure if this works or if this is 
+  before_action :authenticate_user!, only: [:new, :create] 
 
   # GET /events or /events.json
   def index
@@ -22,7 +22,6 @@ class EventsController < ApplicationController
 
   # POST /events or /events.json
   def create
-    if user_sign_in?
       @event = current_user.events.build(event_params)
       @event[:user_id] = current_user.id
       respond_to do |format|
@@ -34,9 +33,6 @@ class EventsController < ApplicationController
           format.json { render json: @event.errors, status: :unprocessable_entity }
         end
       end
-    else
-      redirect_to new_user_session_path, alter:"you need to connect or register"
-    end
   end
   
   
