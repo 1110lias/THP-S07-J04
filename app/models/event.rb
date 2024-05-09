@@ -2,7 +2,7 @@ class Event < ApplicationRecord
   belongs_to :user
   has_many :attendances
   has_many :users, through: :attendances
-  
+  has_one_attached :avatar
   validates :start_date, presence: true
   validate :start_date_in_future
   validates :duration, presence: true, numericality: { greater_than: 0, only_integer: true, multiple_of: 5 }

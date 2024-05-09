@@ -8,8 +8,10 @@ class EventsController < ApplicationController
   end
 
   # GET /events/1 or /events/1.json
-  def show
-  end
+    def show
+      @event = Event.find(params[:id])
+    end
+
 
   # GET /events/new
   def new
@@ -24,6 +26,8 @@ class EventsController < ApplicationController
   def create
       @event = current_user.events.build(event_params)
       @event[:user_id] = current_user.id
+      puts "$" *200
+      puts current_user.avatar
       respond_to do |format|
         if @event.save
           format.html { redirect_to event_url(@event), notice: "Event was successfully created." }
@@ -68,6 +72,6 @@ class EventsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def event_params
-      params.require(:event).permit(:start_date, :duration, :title, :description, :price, :location, :user_id)
+      params.require(:event).permit(:start_date, :duration, :title, :description, :price, :location, :user_id, :avatar)
     end
 end

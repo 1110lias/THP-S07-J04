@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  
   devise_for :users
   resources :attendances
-  resources :events
-  resources :users
+  resources :events do
+    resources :avatars, only: [:create]
+  end
+  
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

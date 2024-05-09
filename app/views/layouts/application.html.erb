@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eventbrite Startup</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <%= javascript_include_tag 'application' %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>    
 </head>
 <body>
 
@@ -22,7 +25,10 @@
         <%= link_to "Create a New Event", new_event_path, class: "nav-link" %>
       </li>
       <li class="nav-item">
-      <%= link_to "Your Profile", users_path(current_user), class: "nav-link" %>
+        <% if user_signed_in? %>
+        <%= link_to "Your Profile", edit_user_registration_path, class: "nav-link" %> <!--Devise propose un lien vers une page d'édition. Pour avoir mieux faire un autre controleur!-->
+        <% end %>
+
       </li>
 
     </ul>
@@ -41,7 +47,15 @@
               <%= link_to "Sign Up", new_user_registration_path, class: "dropdown-item" %>
               <%= link_to "Login", new_user_session_path, class: "dropdown-item" %>
             <% else %>
-              <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "btn btn-danger" %>
+             <%= button_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "nav-link", style: "color: #adb5bd;" %>
+
+                <!-- Formulaire de déconnexion -->
+                <%= form_tag(destroy_user_session_path, method: :delete) do %>
+                  <%= button_tag(type: 'submit', class: 'nav-link', style: 'background: none; border: none; cursor: pointer;') do %>
+                    Se déconnecter
+                  <% end %>
+                <% end %>
+            
             <% end %>
           </div>
         </div>
